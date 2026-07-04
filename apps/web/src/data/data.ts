@@ -1,7 +1,7 @@
 import bh from "./bh.json";
 
 export const piscines = {
-  "Go Piscine": bh.children["bh-piscine"],
+  "BH Piscine": bh.children["bh-piscine"],
   "Rust Piscine": bh.children["bh-module"].children["piscine-rust"],
   "Java Piscine": bh.children["bh-module"].children["piscine-java"],
   "JS Piscine": bh.children["bh-module"].children["piscine-js"],

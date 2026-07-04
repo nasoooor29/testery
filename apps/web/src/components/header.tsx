@@ -1,23 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { SidebarTrigger } from "@testery/ui/components/sidebar";
 
 export default function Header() {
-  const links = [{ to: "/", label: "Home" }] as const;
-
   return (
-    <div>
-      <div className="flex flex-row items-center justify-between px-2 py-1">
-        <nav className="flex gap-4 text-lg">
-          {links.map(({ to, label }) => {
-            return (
-              <Link key={to} to={to}>
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
-        <div className="flex items-center gap-2"></div>
+    <div className="border-b bg-background/90 backdrop-blur">
+      <div className="flex min-h-14 flex-row items-center justify-between px-4">
+        <div className="flex items-center gap-3">
+          <SidebarTrigger />
+          <div>
+            <p className="text-sm font-medium">Testery</p>
+            <p className="text-muted-foreground text-xs">Piscine overview</p>
+          </div>
+        </div>
+        <nav className="flex gap-4 text-sm"></nav>
       </div>
-      <hr />
     </div>
   );
 }

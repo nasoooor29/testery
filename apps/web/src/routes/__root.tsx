@@ -1,11 +1,18 @@
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRouteWithContext,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { SidebarInset, SidebarProvider } from "@testery/ui/components/sidebar";
 import { Toaster } from "@testery/ui/components/sonner";
 
 import type { orpc } from "@/utils/orpc";
 
+import AppSidebar from "../components/app-sidebar";
 import Header from "../components/header";
 
 import appCss from "../index.css?url";
@@ -46,12 +53,17 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body>
-        <div className="grid h-svh grid-rows-[auto_1fr]">
-          <Header />
-          <Outlet />
-        </div>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <div className="grid min-h-svh grid-rows-[auto_1fr]">
+              <Header />
+              <Outlet />
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
         <Toaster richColors />
-        <TanStackRouterDevtools position="bottom-left" />
+        {/* <TanStackRouterDevtools position="bottom-left" /> */}
         <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
         <Scripts />
       </body>
