@@ -136,7 +136,12 @@ function PiscineSidebar({ name }: { name: string }) {
                           key={childName}
                         >
                           <SidebarMenuItem key={childName}>
-                            <SidebarMenuButton tooltip={childName}>
+                            <SidebarMenuButton
+                              tooltip={childName}
+                              onClick={() => {
+                                console.log(childNode);
+                              }}
+                            >
                               {childName}
                             </SidebarMenuButton>
                           </SidebarMenuItem>

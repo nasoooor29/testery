@@ -117,7 +117,7 @@ export function Md({ exercies }: MdProps) {
   const attrs = NeededAttrs.parse(exercies?.attrs);
   const md = useQuery({
     queryKey: ["exercies", exercies.id],
-    queryFn: () => getMarkdown(attrs.subject),
+    queryFn: () => getMarkdown(exercies.id),
   });
   return (
     <>

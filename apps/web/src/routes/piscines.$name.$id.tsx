@@ -1,11 +1,6 @@
 import { exerciesMap } from "@/data/data";
-import { NeededAttrs } from "@/schemas/bh";
-import { getMarkdown, getRealMarkdownPath } from "@/utils/piscine";
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Card, CardContent, CardTitle } from "@testery/ui/components/card";
-import { Button } from "@testery/ui/components/button";
-import { ArrowLeft } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { Card, CardTitle } from "@testery/ui/components/card";
 import CodeTester from "@/components/code-tester";
 import { Md } from "@/components/render-markdown";
 
@@ -14,7 +9,7 @@ export const Route = createFileRoute("/piscines/$name/$id")({
 });
 
 function RouteComponent() {
-  const { name, id } = Route.useParams();
+  const { id } = Route.useParams();
 
   const exercies = exerciesMap.get(Number(id));
   if (!exercies) {
@@ -37,28 +32,6 @@ function RouteComponent() {
           </div>
         </div>
       </div>
-
-      {/* Hello "/piscines/{name}/{id}"!
-      <div>Markdown Path: {markdownPath}</div>
-      <div className="flex gap-4">
-        <Card>
-          <CardContent>
-            <article className="prose dark:prose-invert max-w-full">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: processor.processSync(md.data).toString(),
-                }}
-              />
-            </article>
-          </CardContent>
-        </Card>
-        <Card className="h-[75vh] fixed right-10 w-[25vw] overflow-y-auto">
-          <CardContent></CardContent>
-        </Card>
-      </div>
-      {/* <div>
-        <pre>{JSON.stringify(exercies, null, 2)}</pre>
-      </div> */}
     </div>
   );
 }
