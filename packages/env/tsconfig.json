@@ -1,0 +1,3 @@
+{
+  "extends": "@testery/config/tsconfig.base.json"
+}
