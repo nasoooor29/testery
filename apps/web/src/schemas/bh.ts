@@ -55,6 +55,7 @@ export const ExerciseAttrs = z.object({
 export const NeededAttrs = z.object({
   difficulty: z.number(),
   level: z.number(),
+  subject: z.string().optional(),
 });
 
 export const GenericAttrs = z.record(z.string(), z.unknown());

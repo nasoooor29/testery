@@ -128,13 +128,20 @@ function PiscineSidebar({ name }: { name: string }) {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {questNode.children &&
-                    Object.entries(questNode.children).map(([childName]) => (
-                      <SidebarMenuItem key={childName}>
-                        <SidebarMenuButton tooltip={childName}>
-                          <span className="truncate">{childName}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
+                    Object.entries(questNode.children).map(
+                      ([childName, childNode]) => (
+                        <SidebarMenuItem key={childName}>
+                          <SidebarMenuButton
+                            tooltip={childName}
+                            onClick={() => {
+                              console.log(childName, childNode);
+                            }}
+                          >
+                            {childName}
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ),
+                    )}
                 </SidebarMenu>
               </SidebarGroupContent>
             </CollapsibleContent>
