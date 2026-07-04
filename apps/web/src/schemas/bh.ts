@@ -17,7 +17,7 @@ const Validation = z.union([
   }),
 ]);
 
-const QuestAttrs = z.object({
+export const QuestAttrs = z.object({
   campus: z.string(),
   expectedXp: z.number(),
   delay: z.number(),
@@ -34,7 +34,7 @@ const QuestAttrs = z.object({
   scopeExtraDuration: z.number().optional(),
 });
 
-const ExerciseAttrs = z.object({
+export const ExerciseAttrs = z.object({
   campus: z.string(),
   subject: z.string(),
   validations: z.array(Validation),
@@ -52,10 +52,19 @@ const ExerciseAttrs = z.object({
   expectedFiles: z.array(z.string()),
   allowedFunctions: z.array(z.string()).or(z.array(z.unknown())),
 });
+export const NeededAttrs = z.looseObject({
+  difficulty: z.number(),
+  level: z.number(),
+});
 
-const GenericAttrs = z.record(z.string(), z.unknown());
+export const GenericAttrs = z.record(z.string(), z.unknown());
 
-const Attrs = z.union([QuestAttrs, ExerciseAttrs, GenericAttrs]);
+export const Attrs = z.union([
+  QuestAttrs,
+  ExerciseAttrs,
+  NeededAttrs,
+  GenericAttrs,
+]);
 
 export type Attrs = z.infer<typeof Attrs>;
 
