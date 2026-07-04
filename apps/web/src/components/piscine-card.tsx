@@ -13,7 +13,7 @@ export function PiscineCard({ piscine }: { piscine: PiscineSummary }) {
   return (
     <Card
       key={piscine.name}
-      className="border bg-card/90 transition-transform duration-200 hover:-translate-y-1"
+      className="border transition-transform duration-200 hover:-translate-y-1"
     >
       <CardHeader>
         <CardTitle className="text-base">{piscine.name}</CardTitle>

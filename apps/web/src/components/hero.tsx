@@ -8,7 +8,7 @@ export function Hero({
   availablePiscines: PiscineSummary[];
 }) {
   return (
-    <Card className="overflow-hidden border bg-card">
+    <Card className="overflow-hidden border">
       <div className="grid gap-6 px-6 py-8 lg:grid-cols-[1.3fr_0.7fr] lg:px-8">
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 border px-3 py-1 text-xs uppercase tracking-[0.24em] text-muted-foreground">
@@ -28,7 +28,7 @@ export function Hero({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-          <div className="border bg-background/60 p-4">
+          <div className="border p-4">
             <p className="text-muted-foreground text-xs uppercase tracking-[0.2em]">
               Piscines
             </p>
@@ -36,7 +36,7 @@ export function Hero({
               {availablePiscines.length}
             </p>
           </div>
-          <div className="border bg-background/60 p-4">
+          <div className="border p-4">
             <p className="text-muted-foreground text-xs uppercase tracking-[0.2em]">
               Quests
             </p>
@@ -47,7 +47,7 @@ export function Hero({
               )}
             </p>
           </div>
-          <div className="border bg-background/60 p-4">
+          <div className="border p-4">
             <p className="text-muted-foreground text-xs uppercase tracking-[0.2em]">
               Exercises
             </p>

@@ -2,7 +2,7 @@ import { SidebarTrigger } from "@testery/ui/components/sidebar";
 
 export default function Header() {
   return (
-    <div className="border-b bg-background/90 backdrop-blur">
+    <div className="border-b backdrop-blur">
       <div className="flex min-h-14 flex-row items-center justify-between px-4">
         <div className="flex items-center gap-3">
           <SidebarTrigger />

@@ -15,7 +15,7 @@ function HomeComponent() {
   );
 
   return (
-    <div className="min-h-full bg-[radial-gradient(circle_at_top,rgba(34,197,94,0.12),transparent_35%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent)]">
+    <div className="min-h-full">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
         <Hero availablePiscines={availablePiscines} />
 
