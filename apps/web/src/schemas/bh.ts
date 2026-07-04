@@ -56,6 +56,10 @@ export const NeededAttrs = z.object({
   difficulty: z.number(),
   level: z.number(),
   subject: z.string().optional(),
+  category: z.string().optional(),
+  baseXp: z.number().optional(),
+  expectedFiles: z.array(z.string()),
+  language: z.string().optional(),
 });
 
 export const GenericAttrs = z.record(z.string(), z.unknown());

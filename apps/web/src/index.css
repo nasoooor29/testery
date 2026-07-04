@@ -1,1 +1,2 @@
 @import "@testery/ui/globals.css";
+@plugin "@tailwindcss/typography";

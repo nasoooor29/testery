@@ -1,4 +1,4 @@
-import { BadgeCheck, ChevronDown } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 
 import { piscines } from "@/data/data";
 
@@ -20,7 +20,7 @@ import {
 } from "@testery/ui/components/collapsible";
 import { useQuery } from "@tanstack/react-query";
 import { orpc } from "@/utils/orpc";
-import { useLocation, useParams } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { NodeSchema } from "@/schemas/bh";
 import { getSortedChildren } from "@/utils/piscine";
 
@@ -130,16 +130,17 @@ function PiscineSidebar({ name }: { name: string }) {
                   {questNode.children &&
                     Object.entries(questNode.children).map(
                       ([childName, childNode]) => (
-                        <SidebarMenuItem key={childName}>
-                          <SidebarMenuButton
-                            tooltip={childName}
-                            onClick={() => {
-                              console.log(childName, childNode);
-                            }}
-                          >
-                            {childName}
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
+                        <Link
+                          to="/piscines/$name/$id"
+                          params={{ name, id: String(childNode.id) }}
+                          key={childName}
+                        >
+                          <SidebarMenuItem key={childName}>
+                            <SidebarMenuButton tooltip={childName}>
+                              {childName}
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        </Link>
                       ),
                     )}
                 </SidebarMenu>

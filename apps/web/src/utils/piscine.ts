@@ -52,3 +52,28 @@ export function getSortedChildren(node: Node) {
       (right.index ?? Number.MAX_SAFE_INTEGER),
   );
 }
+
+const BASE_MD_PATH = "01edu/subjects";
+export function getRealMarkdownPath(path: string | undefined) {
+  if (!path) {
+    return "UNKNOWN";
+  }
+  console.log("getRealMarkdownPath", path);
+  if (path.startsWith("/markdown/root/01-edu_module/content/")) {
+    return path.replace(
+      "/markdown/root/01-edu_module/content/",
+      `${BASE_MD_PATH}/`,
+    );
+  }
+  return path;
+}
+export async function getMarkdown(path: string | undefined) {
+  const pp = getRealMarkdownPath(path).replaceAll("-", "_");
+
+  const baseurl = window.location.origin;
+  const res = await fetch(`${baseurl}/${pp}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch markdown from ${pp}`);
+  }
+  return res.text();
+}

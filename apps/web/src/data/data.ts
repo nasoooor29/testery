@@ -1,3 +1,4 @@
+import { Node } from "@/schemas/bh";
 import bh from "./bh.json";
 
 export const piscines = {
@@ -35,3 +36,16 @@ export const avaliableTesters = {
   "ghcr.io/01-edu/ai-starter-dom": ["AI Piscine"],
   "ghcr.io/01-edu/ai-starter-js": ["AI Piscine"],
 };
+
+export const exerciesMap: Map<number, Node> = new Map();
+export const exerciesesNodes = Object.values(piscines).flatMap((piscine) =>
+  Object.values(piscine.children ?? {}).flatMap((quest) =>
+    // @ts-ignore
+    Object.values(quest.children ?? {}).map((exercise: Node) => {
+      // @ts-ignore
+      exerciesMap.set(exercise.id, exercise);
+    }),
+  ),
+);
+
+console.log("exercies map size", exerciesMap.size);
