@@ -1,5 +1,5 @@
 import { piscines } from "@/data/data";
-import { GenericAttrs, NeededAttrs, Node, NodeSchema } from "@/schemas/bh";
+import { NeededAttrs, Node, NodeSchema } from "@/schemas/bh";
 import { getSortedChildren } from "@/utils/piscine";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -7,34 +7,17 @@ export const Route = createFileRoute("/piscines/$name/")({
   component: RouteComponent,
 });
 
-export function getAttrs(attrs: unknown) {
-  const neededAttrs = NeededAttrs.safeParse(attrs);
-  if (neededAttrs.success) {
-    return {
-      type: "needed" as const,
-      schema: NeededAttrs,
-      data: neededAttrs.data,
-    };
-  }
-
-  return {
-    type: "generic" as const,
-    schema: GenericAttrs,
-    data: GenericAttrs.parse(attrs),
-  };
-}
-
 function NodeList({ nodes }: { nodes: Node[] }) {
   return (
     <ul className="space-y-2">
       {nodes.map((node) => {
         const children = getSortedChildren(node);
-        const { type, data } = getAttrs(node.attrs);
-        console.log("Node", node.name, "has type", type, "with data", data);
-        if (type !== "needed") {
+        const attrs = NeededAttrs.safeParse(node.attrs);
+        if (!attrs.success) {
           console.warn(`Node ${node.name} has unexpected attrs:`, node.attrs);
           return;
         }
+        const data = attrs.data;
 
         return (
           <li
