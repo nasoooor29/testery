@@ -89,7 +89,6 @@ function Markdown({ data }: { data: string }) {
                   margin: 0,
                   borderRadius: "0 0 0.2rem 0.2rem",
                 }}
-                {...props}
               >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
@@ -159,7 +158,7 @@ export function Md({ exercies }: MdProps) {
                 </div>
                 <Separator />
                 <div className="flex items-center gap-2">
-                  {attrs.expectedFiles?.map((file, index) => (
+                  {attrs.expectedFiles?.map((file) => (
                     <Badge variant="secondary">{file}</Badge>
                   ))}
                 </div>
