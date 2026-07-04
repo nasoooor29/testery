@@ -21,7 +21,10 @@ export function collectSummary(name: string, node: Node) {
       current.attrs.parentType === "piscine"
     ) {
       questCount += 1;
-      deepestQuestDepth = Math.max(deepestQuestDepth, getDepthFromQuest(current));
+      deepestQuestDepth = Math.max(
+        deepestQuestDepth,
+        getDepthFromQuest(current),
+      );
     }
 
     if ("parentType" in current.attrs && current.attrs.parentType === "quest") {
@@ -42,3 +45,10 @@ export function collectSummary(name: string, node: Node) {
 }
 
 export type PiscineSummary = ReturnType<typeof collectSummary>;
+export function getSortedChildren(node: Node) {
+  return Object.values(node.children ?? {}).sort(
+    (left, right) =>
+      (left.index ?? Number.MAX_SAFE_INTEGER) -
+      (right.index ?? Number.MAX_SAFE_INTEGER),
+  );
+}

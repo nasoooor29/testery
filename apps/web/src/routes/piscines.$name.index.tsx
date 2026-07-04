@@ -1,18 +1,11 @@
 import { piscines } from "@/data/data";
 import { GenericAttrs, NeededAttrs, Node, NodeSchema } from "@/schemas/bh";
+import { getSortedChildren } from "@/utils/piscine";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/piscines/$name/")({
   component: RouteComponent,
 });
-
-function getSortedChildren(node: Node) {
-  return Object.values(node.children ?? {}).sort(
-    (left, right) =>
-      (left.index ?? Number.MAX_SAFE_INTEGER) -
-      (right.index ?? Number.MAX_SAFE_INTEGER),
-  );
-}
 
 export function getAttrs(attrs: unknown) {
   const neededAttrs = NeededAttrs.safeParse(attrs);
