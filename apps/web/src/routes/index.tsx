@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 import { orpc } from "@/utils/orpc";
+import { piscines } from "@/data/data";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -25,6 +26,7 @@ const TITLE_TEXT = `
 
 function HomeComponent() {
   const healthCheck = useQuery(orpc.healthCheck.queryOptions());
+  const avaliablePiscines = Object.keys(piscines)
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-2">
