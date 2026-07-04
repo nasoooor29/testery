@@ -81,7 +81,10 @@ const pathRules: PathRule[] = [
     from: "/markdown/root/public/subjects/",
     to: `${BASE_MD_PATH}/`,
   },
-
+  {
+    from: "/api/content/root/01-edu_module/content/",
+    to: `${BASE_MD_PATH}/`,
+  },
   {
     from: "/api/content/root/01-edu_imperative-piscine/content/",
     to: `${BASE_MD_PATH}/`,
