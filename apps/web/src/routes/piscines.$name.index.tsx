@@ -2,7 +2,7 @@ import { piscines } from "@/data/data";
 import { GenericAttrs, NeededAttrs, Node, NodeSchema } from "@/schemas/bh";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/piscines/$name")({
+export const Route = createFileRoute("/piscines/$name/")({
   component: RouteComponent,
 });
 

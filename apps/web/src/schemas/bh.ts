@@ -52,7 +52,7 @@ export const ExerciseAttrs = z.object({
   expectedFiles: z.array(z.string()),
   allowedFunctions: z.array(z.string()).or(z.array(z.unknown())),
 });
-export const NeededAttrs = z.looseObject({
+export const NeededAttrs = z.object({
   difficulty: z.number(),
   level: z.number(),
 });

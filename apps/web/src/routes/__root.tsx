@@ -6,7 +6,6 @@ import {
   Scripts,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { SidebarInset, SidebarProvider } from "@testery/ui/components/sidebar";
 import { Toaster } from "@testery/ui/components/sonner";
 
