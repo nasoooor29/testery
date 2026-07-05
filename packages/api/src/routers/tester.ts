@@ -4,7 +4,6 @@ import { env } from "@testery/env/server";
 import { dockerRun } from "../utils/docker";
 import fs from "fs";
 import { ORPCError } from "@orpc/client";
-import { error } from "console";
 
 async function dockerRunWrapper(args: string[], signal?: AbortSignal) {
   const res = await dockerRun(args, signal);
@@ -62,20 +61,22 @@ export const testerRouter = {
       return dockerRunWrapper(args, signal);
     }),
 
-  bh: publicProcedure
+  script: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const repoPath = `${env.REPOS_DIR}/bh-piscine`;
+      const repoPath = `${env.REPOS_DIR}/piscine-script`;
       ensureDir(repoPath);
 
       const args = [
         "run",
         "--rm",
+        "-w",
+        "/tmp",
         "-e",
         `EXERCISE=${input.name}`,
         "-v",
-        `${repoPath}:/jail/student`,
-        "ghcr.io/01-edu/test-go",
+        `${repoPath}:/tmp/student`,
+        "ghcr.io/01-edu/module-sh:latest",
       ];
 
       return dockerRunWrapper(args, signal);

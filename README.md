@@ -49,9 +49,9 @@ cargo init <exercise_name>
 ## the tester have been tested on the following piscines:
 - [ ] BH Piscine
 - [ ] Main checkpoint
-- [ ] JS Piscine
-- [ ] Rust Piscine
-- [ ] Scripting Piscine
+- [x] JS Piscine
+- [x] Rust Piscine
+- [x] Scripting Piscine
 - [ ] Java Piscine
 - [ ] Flutter Piscine
 - [ ] UX Piscine

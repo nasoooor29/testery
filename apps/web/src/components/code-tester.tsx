@@ -19,7 +19,7 @@ interface Props {
 const testerProcedures = {
   "Rust Piscine": orpc.tester.rust,
   "JS Piscine": orpc.tester.js,
-  "BH Piscine": orpc.tester.bh,
+  "Scripting Piscine": orpc.tester.script,
 } as const;
 
 type TestedPiscine = keyof typeof testerProcedures;
