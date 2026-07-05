@@ -24,7 +24,9 @@ const testerProcedures = {
 type TestedPiscine = keyof typeof testerProcedures;
 
 function getTestedPiscine(piscineName: string): TestedPiscine | null {
-  return piscineName in testerProcedures ? (piscineName as TestedPiscine) : null;
+  return piscineName in testerProcedures
+    ? (piscineName as TestedPiscine)
+    : null;
 }
 
 function CodeTester({ exercies, piscineName }: Props) {
@@ -34,7 +36,8 @@ function CodeTester({ exercies, piscineName }: Props) {
   const mutationOptions = testedPiscine
     ? testerProcedures[testedPiscine].mutationOptions({
         onError: (e) => {
-          const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>).data;
+          const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>)
+            .data;
           console.error(e);
           setTestOutput(errData.output);
           toast.error(errData.error || "An error occurred while running tests");
