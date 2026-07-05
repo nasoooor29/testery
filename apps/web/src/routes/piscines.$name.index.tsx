@@ -21,6 +21,7 @@ function RouteComponent() {
       <div className="space-y-1">
         <h1 className="text-2xl font-bold">{name}</h1>
         <p className="text-muted-foreground text-sm">{typedPiscine.name}</p>
+        <p>select the exercise you want from the sidebar</p>
       </div>
     </div>
   );
