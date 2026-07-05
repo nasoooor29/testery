@@ -16,8 +16,12 @@ export function collectSummary(name: string, node: Node) {
     return 1 + Math.max(...children.map(getDepthFromQuest));
   };
 
-  const visit = (current: Node) => {
+  const visit = (current?: Node) => {
+    if (!current) return;
+
     if (
+      // handle if attrs is undefined
+      current.attrs &&
       "parentType" in current.attrs &&
       current.attrs.parentType === "piscine"
     ) {
@@ -28,7 +32,11 @@ export function collectSummary(name: string, node: Node) {
       );
     }
 
-    if ("parentType" in current.attrs && current.attrs.parentType === "quest") {
+    if (
+      current.attrs &&
+      "parentType" in current.attrs &&
+      current.attrs.parentType === "quest"
+    ) {
       exerciseCount += 1;
     }
 

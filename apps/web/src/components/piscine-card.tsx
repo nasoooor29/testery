@@ -12,8 +12,7 @@ import { BookOpen, Boxes, Layers3 } from "lucide-react";
 
 export function PiscineCard({ piscine }: { piscine: PiscineSummary }) {
   const zeroed = piscine.questCount === 0 && piscine.exerciseCount === 0;
-  const depthMoreThan2 =
-    piscine.deepestQuestDepth >= 2 || piscine.deepestQuestDepth === 0;
+  const depthMoreThan2 = piscine.deepestQuestDepth >= 2;
   const isDisabled = zeroed || depthMoreThan2;
 
   return (
