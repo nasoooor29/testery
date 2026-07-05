@@ -69,6 +69,10 @@ cargo init <exercise_name>
 ![Tester screenshot 4](attachments/2026-07-05%2021-09-01.png)
 ![Tester screenshot 5](attachments/2026-07-05%2021-09-11.png)
 
+## TODOs
+- [ ] make sure the other piscines are tested and we can run the docker images
+- [ ] use the object on data.ts to run the tester instead of pinning the docker image by the piscine name (some piscines use multiple docker images)
+
 
 ## Available Scripts
 
