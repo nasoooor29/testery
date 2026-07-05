@@ -87,10 +87,12 @@ export async function dockerRun(
     let output = "";
 
     proc.stdout.on("data", (data) => {
+      console.log("Docker stdout:", data.toString());
       output += data.toString();
     });
 
     proc.stderr.on("data", (data) => {
+      console.error("Docker stderr:", data.toString());
       output += data.toString();
     });
 
