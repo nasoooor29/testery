@@ -63,11 +63,11 @@ cargo init <exercise_name>
 
 
 ## IMAGES TO SHOWCASE THE TESTER
-[PLACE IMAGE HERE]
-[PLACE IMAGE HERE]
-[PLACE IMAGE HERE]
-[PLACE IMAGE HERE]
-[PLACE IMAGE HERE]
+![Tester screenshot 1](attachments/2026-07-05%2021-07-17.png)
+![Tester screenshot 2](attachments/2026-07-05%2021-08-42.png)
+![Tester screenshot 3](attachments/2026-07-05%2021-08-46.png)
+![Tester screenshot 4](attachments/2026-07-05%2021-09-01.png)
+![Tester screenshot 5](attachments/2026-07-05%2021-09-11.png)
 
 
 ## Available Scripts
