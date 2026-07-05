@@ -13,25 +13,48 @@ import { DockerRunResponse } from "@testery/api/utils/docker";
 
 interface Props {
   exercies: Node;
+  piscineName: string;
 }
 
-function CodeTester({ exercies }: Props) {
-  const [testOutput, setTestOutput] = useState("");
+const testerProcedures = {
+  "Rust Piscine": orpc.tester.rust,
+  "JS Piscine": orpc.tester.js,
+} as const;
 
-  const runResult = useMutation(
-    orpc.tester.rust.mutationOptions({
-      onError: (e) => {
-        const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>).data;
-        console.error(e);
-        setTestOutput(errData.output);
-        toast.error(errData.error || "An error occurred while running tests");
-      },
-      onSuccess: (data) => {
-        toast.success("Tests completed successfully");
-        setTestOutput(data.output);
-      },
-    }),
-  );
+type TestedPiscine = keyof typeof testerProcedures;
+
+function getTestedPiscine(piscineName: string): TestedPiscine | null {
+  return piscineName in testerProcedures ? (piscineName as TestedPiscine) : null;
+}
+
+function CodeTester({ exercies, piscineName }: Props) {
+  const [testOutput, setTestOutput] = useState("");
+  const testedPiscine = getTestedPiscine(piscineName);
+
+  const mutationOptions = testedPiscine
+    ? testerProcedures[testedPiscine].mutationOptions({
+        onError: (e) => {
+          const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>).data;
+          console.error(e);
+          setTestOutput(errData.output);
+          toast.error(errData.error || "An error occurred while running tests");
+        },
+        onSuccess: (data) => {
+          toast.success("Tests completed successfully");
+          setTestOutput(data.output);
+        },
+      })
+    : {
+        mutationFn: async (_input: { name: string }) => {
+          throw new Error("No tester implemented for this exercise language");
+        },
+        onError: (e: Error) => {
+          setTestOutput(e.message);
+          toast.error(e.message);
+        },
+      };
+
+  const runResult = useMutation(mutationOptions);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(testOutput);
@@ -77,7 +100,7 @@ function CodeTester({ exercies }: Props) {
                 console.log("Running tests for exercise:", exercies);
                 runResult.mutate({ name: exercies.name });
               }}
-              disabled={runResult.isPending}
+              disabled={runResult.isPending || !testedPiscine}
               className="flex-1 enabled:cursor-pointer"
             >
               {runResult.isPending ? (

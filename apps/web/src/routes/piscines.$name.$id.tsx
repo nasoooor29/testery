@@ -9,7 +9,7 @@ export const Route = createFileRoute("/piscines/$name/$id")({
 });
 
 function RouteComponent() {
-  const { id } = Route.useParams();
+  const { id, name } = Route.useParams();
 
   const exercies = exerciesMap.get(Number(id));
   if (!exercies) {
@@ -28,7 +28,7 @@ function RouteComponent() {
             </Card>
 
             {/* Test card */}
-            <CodeTester exercies={exercies} />
+            <CodeTester exercies={exercies} piscineName={name} />
           </div>
         </div>
       </div>
