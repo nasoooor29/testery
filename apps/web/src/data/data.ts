@@ -38,14 +38,21 @@ export const avaliableTesters = {
 };
 
 export const exerciesMap: Map<number, Node> = new Map();
+function collectExercises(node: Node): Node[] {
+  const result: Node[] = [];
+
+  for (const child of Object.values(node.children ?? {})) {
+    result.push(child);
+    exerciesMap.set(child.id, child);
+
+    result.push(...collectExercises(child));
+  }
+
+  return result;
+}
+
 export const exerciesesNodes = Object.values(piscines).flatMap((piscine) =>
-  Object.values(piscine.children ?? {}).flatMap((quest) =>
-    // @ts-ignore
-    Object.values(quest.children ?? {}).map((exercise: Node) => {
-      // @ts-ignore
-      exerciesMap.set(exercise.id, exercise);
-    }),
-  ),
+  collectExercises(piscine),
 );
 
 console.log("exercies map size", exerciesMap.size);

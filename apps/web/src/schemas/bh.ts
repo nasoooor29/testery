@@ -58,7 +58,7 @@ export const NeededAttrs = z.object({
   subject: z.string().optional(),
   category: z.string().optional(),
   baseXp: z.number().optional(),
-  expectedFiles: z.array(z.string()),
+  expectedFiles: z.array(z.string()).optional(),
   language: z.string().optional(),
 });
 
