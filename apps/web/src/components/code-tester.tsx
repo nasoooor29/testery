@@ -21,6 +21,7 @@ const testerProcedures = {
   "JS Piscine": orpc.tester.js,
   "Scripting Piscine": orpc.tester.script,
   "BH Piscine": orpc.tester.bh,
+  "Main checkpoint": orpc.tester.bh,
 } as const;
 
 type TestedPiscine = keyof typeof testerProcedures;
