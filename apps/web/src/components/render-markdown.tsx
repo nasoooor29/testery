@@ -164,9 +164,6 @@ export function Md({ exercies }: MdProps) {
                 </div>
               </div>
             </div>
-            {/* Separator for clear visual break */}
-            <Separator className="my-8" />
-
             {/* Markdown content with slightly more padding */}
             <div className="p-4">
               <Markdown data={md.data} />

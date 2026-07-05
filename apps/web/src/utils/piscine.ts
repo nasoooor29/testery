@@ -35,7 +35,8 @@ export function collectSummary(name: string, node: Node) {
     if (
       current.attrs &&
       "parentType" in current.attrs &&
-      current.attrs.parentType === "quest"
+      (current.attrs.parentType === "quest" ||
+        current.attrs.parentType === "exam")
     ) {
       exerciseCount += 1;
     }
@@ -44,6 +45,26 @@ export function collectSummary(name: string, node: Node) {
   };
 
   visit(node);
+
+  // this is for the main checkpoint exam
+  if (name === "Main checkpoint") {
+    return {
+      questCount: 10,
+      exerciseCount: exerciseCount,
+      deepestQuestDepth: 0,
+      name,
+    };
+  }
+
+  // handle flat piscines they don't have any quests but they have exercises
+  if (deepestQuestDepth === 0) {
+    return {
+      questCount: 0,
+      exerciseCount: questCount,
+      deepestQuestDepth: 0,
+      name,
+    };
+  }
 
   return {
     name,
