@@ -19,6 +19,7 @@ interface Props {
 const testerProcedures = {
   "Rust Piscine": orpc.tester.rust,
   "JS Piscine": orpc.tester.js,
+  "BH Piscine": orpc.tester.bh,
 } as const;
 
 type TestedPiscine = keyof typeof testerProcedures;
@@ -39,12 +40,14 @@ function CodeTester({ exercies, piscineName }: Props) {
           const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>)
             .data;
           console.error(e);
-          setTestOutput(errData.output);
+          setTestOutput(
+            errData.output || "An error occurred while running tests",
+          );
           toast.error(errData.error || "An error occurred while running tests");
         },
         onSuccess: (data) => {
           toast.success("Tests completed successfully");
-          setTestOutput(data.output);
+          setTestOutput(data.output || "No output from tests");
         },
       })
     : {
