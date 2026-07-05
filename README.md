@@ -12,6 +12,13 @@ mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES
 mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES/piscine-rust
 mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES/bh-piscine
 ```
+
+then create `apps/web/.env` and put only one path in it: the absolute path to `THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES`.
+
+```env
+REPOS_DIR=/absolute/path/to/THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES
+```
+
 here is an example file tree
 ```
 ├───bh-piscine
