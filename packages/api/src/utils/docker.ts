@@ -81,7 +81,7 @@ export async function dockerRun(
   args: string[],
   signal?: AbortSignal,
 ): Promise<DockerRunResponse> {
-  return await new Promise((resolve, reject) => {
+  return await new Promise((resolve) => {
     const proc = spawn("docker", args);
 
     let output = "";
@@ -97,7 +97,7 @@ export async function dockerRun(
     });
 
     proc.once("error", (err) => {
-      reject({
+      resolve({
         output,
         exitCode: null,
         error: err.message,
@@ -111,7 +111,7 @@ export async function dockerRun(
           exitCode: code,
         });
       } else {
-        reject({
+        resolve({
           output,
           exitCode: code,
           error: `Docker exited with code ${code}`,
@@ -123,7 +123,7 @@ export async function dockerRun(
       "abort",
       () => {
         proc.kill("SIGKILL");
-        reject({
+        resolve({
           output,
           exitCode: null,
           error: "Aborted",

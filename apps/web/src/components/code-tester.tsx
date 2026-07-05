@@ -8,6 +8,8 @@ import { useState } from "react";
 import { orpc } from "@/utils/orpc";
 import { Node } from "@/schemas/bh";
 import { toast } from "sonner";
+import { ORPCError } from "@orpc/client";
+import { DockerRunResponse } from "@testery/api/utils/docker";
 
 interface Props {
   exercies: Node;
@@ -19,9 +21,10 @@ function CodeTester({ exercies }: Props) {
   const runResult = useMutation(
     orpc.tester.rust.mutationOptions({
       onError: (e) => {
+        const errData = (e as ORPCError<"BAD_REQUEST", DockerRunResponse>).data;
         console.error(e);
-        setTestOutput(e.message);
-        toast.error(e.message);
+        setTestOutput(errData.output);
+        toast.error(errData.error || "An error occurred while running tests");
       },
       onSuccess: (data) => {
         toast.success("Tests completed successfully");

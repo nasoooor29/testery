@@ -5,6 +5,16 @@ import { dockerRun } from "../utils/docker";
 import fs from "fs";
 import { ORPCError } from "@orpc/client";
 
+async function dockerRunWrapper(args: string[], signal?: AbortSignal) {
+  const res = await dockerRun(args, signal);
+  if (res.exitCode !== 0) {
+    throw new ORPCError("INTERNAL_SERVER_ERROR", {
+      message: `Docker exited with code ${res.exitCode}. Output: ${res.output}`,
+      data: res,
+    });
+  }
+  return res;
+}
 export const testerRouter = {
   rust: publicProcedure
     .input(z.object({ name: z.string() }))
@@ -29,7 +39,7 @@ export const testerRouter = {
         "cd /root && /app/entrypoint.sh",
       ];
 
-      return dockerRun(args, signal);
+      return dockerRunWrapper(args, signal);
     }),
 
   js: publicProcedure
@@ -48,7 +58,7 @@ export const testerRouter = {
         "ghcr.io/01-edu/test-js:latest",
       ];
 
-      return dockerRun(args, signal);
+      return dockerRunWrapper(args, signal);
     }),
 };
 function ensureDir(repoPath: string) {
