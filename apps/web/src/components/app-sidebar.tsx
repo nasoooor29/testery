@@ -184,48 +184,65 @@ function PiscineSidebar1({ name, piscine }: { name: string; piscine: Node }) {
   }
   return (
     <SidebarContent>
-      {Object.entries(quests).map(([index, questNode]) => (
-        <Collapsible
-          key={index}
-          defaultOpen={false}
-          className="group/collapsible"
-        >
-          <SidebarGroup>
-            <CollapsibleTrigger>
-              <SidebarGroupLabel className="hover:bg-secondary hover:text-secondary-foreground">
-                {questNode.name}
-              </SidebarGroupLabel>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
+      {Object.entries(quests).map(([index, questNode]) => {
+        const childNodes = getSortedChildren(questNode);
+
+        if (childNodes.length === 0) {
+          return (
+            <SidebarGroup key={index}>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {questNode.children &&
-                    Object.entries(getSortedChildren(questNode)).map(
-                      ([index, childNode]) => (
-                        <Link
-                          to="/piscines/$name/$id"
-                          params={{ name, id: String(childNode.id) }}
-                          key={index}
-                        >
-                          <SidebarMenuItem>
-                            <SidebarMenuButton
-                              tooltip={childNode.name}
-                              onClick={() => {
-                                console.log(childNode);
-                              }}
-                            >
-                              {childNode.name}
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        </Link>
-                      ),
-                    )}
+                  <Link
+                    to="/piscines/$name/$id"
+                    params={{ name, id: String(questNode.id) }}
+                  >
+                    <SidebarMenuItem>
+                      <SidebarMenuButton tooltip={questNode.name}>
+                        {questNode.name}
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </Link>
                 </SidebarMenu>
               </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-      ))}
+            </SidebarGroup>
+          );
+        }
+
+        return (
+          <Collapsible
+            key={index}
+            defaultOpen={false}
+            className="group/collapsible"
+          >
+            <SidebarGroup>
+              <CollapsibleTrigger>
+                <SidebarGroupLabel className="hover:bg-secondary hover:text-secondary-foreground">
+                  {questNode.name}
+                </SidebarGroupLabel>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {childNodes.map((childNode, childIndex) => (
+                      <Link
+                        to="/piscines/$name/$id"
+                        params={{ name, id: String(childNode.id) }}
+                        key={childIndex}
+                      >
+                        <SidebarMenuItem>
+                          <SidebarMenuButton tooltip={childNode.name}>
+                            {childNode.name}
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </Link>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
+        );
+      })}
     </SidebarContent>
   );
 }

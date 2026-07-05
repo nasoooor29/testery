@@ -71,3 +71,63 @@ export function dockerStream(args: string[], signal?: AbortSignal) {
     }
   };
 }
+
+export interface DockerRunResponse {
+  output: string;
+  error?: string;
+  exitCode: number | null;
+}
+export async function dockerRun(
+  args: string[],
+  signal?: AbortSignal,
+): Promise<DockerRunResponse> {
+  return await new Promise((resolve, reject) => {
+    const proc = spawn("docker", args);
+
+    let output = "";
+
+    proc.stdout.on("data", (data) => {
+      output += data.toString();
+    });
+
+    proc.stderr.on("data", (data) => {
+      output += data.toString();
+    });
+
+    proc.once("error", (err) => {
+      reject({
+        output,
+        exitCode: null,
+        error: err.message,
+      });
+    });
+
+    proc.once("close", (code) => {
+      if (code === 0) {
+        resolve({
+          output,
+          exitCode: code,
+        });
+      } else {
+        reject({
+          output,
+          exitCode: code,
+          error: `Docker exited with code ${code}`,
+        });
+      }
+    });
+
+    signal?.addEventListener(
+      "abort",
+      () => {
+        proc.kill("SIGKILL");
+        reject({
+          output,
+          exitCode: null,
+          error: "Aborted",
+        });
+      },
+      { once: true },
+    );
+  });
+}

@@ -1,14 +1,12 @@
-import { eventIterator } from "@orpc/server";
 import { z } from "zod";
 import { publicProcedure } from "..";
 import { env } from "@testery/env/server";
-import { dockerStream, TesterLogEvent } from "../utils/docker";
+import { dockerRun } from "../utils/docker";
 
 export const testerRouter = {
   rust: publicProcedure
     .input(z.object({ name: z.string() }))
-    .output(eventIterator(TesterLogEvent))
-    .handler(async function* ({ input, signal }) {
+    .handler(async function ({ input, signal }) {
       const repoPath = `${env.REPOS_DIR}/piscine-rust`;
 
       const args = [
@@ -27,13 +25,12 @@ export const testerRouter = {
         "cd /root && /app/entrypoint.sh",
       ];
 
-      yield* dockerStream(args, signal)();
+      return dockerRun(args, signal);
     }),
 
   js: publicProcedure
     .input(z.object({ name: z.string() }))
-    .output(eventIterator(TesterLogEvent))
-    .handler(async function* ({ input, signal }) {
+    .handler(async function ({ input, signal }) {
       const repoPath = `${env.REPOS_DIR}/piscine-js`;
 
       const args = [
@@ -46,6 +43,6 @@ export const testerRouter = {
         "ghcr.io/01-edu/test-js:latest",
       ];
 
-      yield* dockerStream(args, signal)();
+      return dockerRun(args, signal);
     }),
 };
