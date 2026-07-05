@@ -1,67 +1,57 @@
 # testery
-
-This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Start, Self, ORPC, and more.
-
-## Features
-
-- **TypeScript** - For type safety and improved developer experience
-- **TanStack Start** - SSR framework with TanStack Router
-- **TailwindCSS** - Utility-first CSS for rapid UI development
-- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
-- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
+This is a tester for the piscine exercises, and please read the notes below before contacting me (trust me it's very short), I WILL NOT answer any questions that are already answered in this readme.
 
 ## Getting Started
-
-First, install the dependencies:
-
-```bash
-pnpm install
+READ THIS SHIT BEFORE CONTACTING ME (PLEASE I BEG YOU)
+this will work on all the piscines on reboot you just need to make a dir and put your repo there
+for example:
+```sh
+mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES
+# now this directory will contain the piscines 
+# the piscine names inside the great directory are hard coded in the code so you need to name them exactly like that
+mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES/piscine-rust
+mkdir THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES/bh-piscine
 ```
-
-Then, run the development server:
-
-```bash
-pnpm run dev
+here is an example file tree
 ```
-
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
-
-## UI Customization
-
-React web apps in this stack share shadcn/ui primitives through `packages/ui`.
-
-- Change design tokens and global styles in `packages/ui/src/styles/globals.css`
-- Update shared primitives in `packages/ui/src/components/*`
-- Adjust shadcn aliases or style config in `packages/ui/components.json` and `apps/web/components.json`
-
-### Add more shared components
-
-Run this from the project root to add more primitives to the shared UI package:
-
-```bash
-npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
+├───bh-piscine
+│   │   sortwordarr.go
+│   │   split.go
+│   └───sortparams
+│           main.go
+└───piscine-rust
+    ├───to_url
+    │   │   Cargo.toml
+    │   └───src
+    │           main.rs
+    └───traits
+        │   Cargo.toml
+        └───src
+                main.rs
 ```
+and i swear if i see u put the piscine repos in the root of the repo i will kill you on the spot, so please read this shit before contacting me.
 
-Import shared components like this:
+if you did it right my tester will show you a green badge on the piscine page
+[PUT IMAGE HERE PLZ]
 
-```tsx
-import { Button } from "@testery/ui/components/button";
+## NOTES:
+1. for some noobs here especially in rust you need to create the directories with cargo not by hand like the other piscines
+```sh
+# enter your rust piscine repo
+cd THE_GREAT_DIRECTORY_WILL_CONTAIN_ALL_THE_PISCINES/piscine-rust 
+cargo init <exercise_name>
 ```
+2. if it doesn't work on my tester and doesn't work on the reboot tester, you are a noob and need to fix your code.
+3. if it work on my tester and doesn't work on the reboot tester, there is a version mismatch because reboot won't update thiers and you using the latest so good luck with this shit.
+4. use linux any windows or mac users are not welcomed here (if you windows with WSL you are exception).
+5. any issues on the repo please contact `hhanoon` on discord, he will fix everything for you.
 
-### Add app-specific blocks
-
-If you want to add app-specific blocks instead of shared primitives, run the shadcn CLI from `apps/web`.
-
-## Project Structure
-
-```
-testery/
-├── apps/
-│   └── web/         # Fullstack application (React + TanStack Start)
-├── packages/
-│   ├── ui/          # Shared shadcn/ui components and styles
-│   ├── api/         # API layer / business logic
-```
+## IMAGES TO SHOWCASE THE TESTER
+[PLACE IMAGE HERE]
+[PLACE IMAGE HERE]
+[PLACE IMAGE HERE]
+[PLACE IMAGE HERE]
+[PLACE IMAGE HERE]
 
 ## Available Scripts
 
@@ -69,3 +59,10 @@ testery/
 - `pnpm run build`: Build all applications
 - `pnpm run dev:web`: Start only the web application
 - `pnpm run check-types`: Check TypeScript types across all apps
+
+## Built With
+- **TypeScript** - For type safety and improved developer experience
+- **TanStack Start** - SSR framework with TanStack Router (which i didn't use SSR on any of this shit)
+- **TailwindCSS** - Utility-first CSS for rapid UI development
+- **Shared UI package** - shadcn/ui primitives live in `packages/ui`
+- **oRPC** - End-to-end type-safe APIs with OpenAPI integration
