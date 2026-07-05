@@ -46,12 +46,29 @@ cargo init <exercise_name>
 4. use linux any windows or mac users are not welcomed here (if you windows with WSL you are exception).
 5. any issues on the repo please contact `hhanoon` on discord, he will fix everything for you.
 
+## the tester have been tested on the following piscines:
+- [ ] BH Piscine
+- [ ] Main checkpoint
+- [ ] JS Piscine
+- [ ] Rust Piscine
+- [ ] Scripting Piscine
+- [ ] Java Piscine
+- [ ] Flutter Piscine
+- [ ] UX Piscine
+- [ ] UI Piscine
+- [ ] Blockchain Piscine
+- [ ] Prompting Piscine
+- [ ] AI Piscine
+- [ ] AI Forge Piscine
+
+
 ## IMAGES TO SHOWCASE THE TESTER
 [PLACE IMAGE HERE]
 [PLACE IMAGE HERE]
 [PLACE IMAGE HERE]
 [PLACE IMAGE HERE]
 [PLACE IMAGE HERE]
+
 
 ## Available Scripts
 
