@@ -52,3 +52,5 @@ coverage
 .cache
 tmp
 temp
+/helpME/piscine-rust/
+/helpME/piscine-js
