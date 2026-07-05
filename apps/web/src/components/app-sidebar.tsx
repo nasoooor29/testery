@@ -43,8 +43,8 @@ export default function AppSidebar() {
     const node = piscines[name as keyof typeof piscines];
     const typedPiscine = NodeSchema.safeParse(node);
     summary = collectSummary(name, node);
-    if (!typedPiscine.success || typedPiscine.data.type !== "piscine") {
-      console.error("Invalid piscine data for", name, node);
+    if (!typedPiscine.success) {
+      console.error("Invalid piscine data for", name, node, typedPiscine.error);
       return (
         <SidebarContent>
           <SidebarGroup>
