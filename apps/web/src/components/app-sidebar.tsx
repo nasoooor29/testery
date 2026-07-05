@@ -64,11 +64,13 @@ function HomePageSidebar() {
         <SidebarGroupContent>
           <SidebarMenu>
             {piscineNames.map((name) => (
-              <SidebarMenuItem key={name}>
-                <SidebarMenuButton tooltip={name}>
-                  <span className="truncate">{name}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
+              <Link to="/piscines/$name" params={{ name: name }}>
+                <SidebarMenuItem key={name}>
+                  <SidebarMenuButton tooltip={name}>
+                    <span className="truncate">{name}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </Link>
             ))}
           </SidebarMenu>
         </SidebarGroupContent>
