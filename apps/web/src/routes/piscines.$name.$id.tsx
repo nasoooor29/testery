@@ -28,7 +28,7 @@ function RouteComponent() {
             </Card>
 
             {/* Test card */}
-            <CodeTester />
+            <CodeTester exercies={exercies} />
           </div>
         </div>
       </div>

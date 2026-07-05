@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@testery/ui/components/button";
 import { Card } from "@testery/ui/components/card";
 import { Badge } from "@testery/ui/components/badge";
@@ -70,7 +70,10 @@ function CodeTester({ exercies }: Props) {
         <div className="p-4">
           <div className="mb-4 flex flex-wrap gap-2">
             <Button
-              onClick={() => runResult.mutate({ name: exercies.name })}
+              onClick={() => {
+                console.log("Running tests for exercise:", exercies);
+                runResult.mutate({ name: exercies.name });
+              }}
               disabled={runResult.isPending}
               className="flex-1 enabled:cursor-pointer"
             >
