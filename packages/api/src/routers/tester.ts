@@ -61,6 +61,27 @@ export const testerRouter = {
       return dockerRunWrapper(args, signal);
     }),
 
+  bh: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .handler(async function ({ input, signal }) {
+      const repoPath = `${env.REPOS_DIR}/bh-piscine`;
+      ensureDir(repoPath);
+
+      const args = [
+        "run",
+        "--rm",
+        "-w",
+        "/root",
+        "-e",
+        `EXERCISE=${input.name}`,
+        "-v",
+        `${repoPath}:/root/student`,
+        "ghcr.io/01-edu/test-go:latest",
+      ];
+
+      return dockerRunWrapper(args, signal);
+    }),
+
   script: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
