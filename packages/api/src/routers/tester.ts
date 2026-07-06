@@ -85,7 +85,7 @@ export const testerRouter = {
   script: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const repoPath = `${env.REPOS_DIR}/piscine-script`;
+      const repoPath = `${env.REPOS_DIR}/piscine-scripting`;
       ensureDir(repoPath);
 
       const args = [
