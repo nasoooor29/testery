@@ -10,7 +10,9 @@
     "dev": "pnpm -r --stream dev",
     "build": "pnpm -r --stream build",
     "check-types": "pnpm -r check-types",
-    "dev:web": "pnpm --filter web dev"
+    "dev:web": "pnpm --filter web dev",
+    "repo:clone": "bash scripts/update_repo.sh clone",
+    "repo:pull": "bash scripts/update_repo.sh pull"
   },
   "dependencies": {
     "@testery/env": "workspace:*",
