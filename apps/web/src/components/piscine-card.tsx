@@ -10,11 +10,15 @@ import {
 } from "@testery/ui/components/card";
 import { BookOpen, Boxes, Layers3 } from "lucide-react";
 
-export function PiscineCard({ piscine }: { piscine: PiscineSummary }) {
-  const zeroed = piscine.questCount === 0 && piscine.exerciseCount === 0;
-  const depthMoreThan2 = piscine.deepestQuestDepth >= 2;
-  const isDisabled = zeroed || depthMoreThan2;
-
+export function PiscineCard({
+  piscine,
+  isDisabled,
+  disableReason,
+}: {
+  piscine: PiscineSummary;
+  isDisabled: boolean;
+  disableReason?: string;
+}) {
   return (
     <Link
       to="/piscines/$name"
@@ -63,7 +67,13 @@ export function PiscineCard({ piscine }: { piscine: PiscineSummary }) {
           </div>
         </CardContent>
         <CardFooter className="justify-between text-xs text-muted-foreground">
-          <span>Available now</span>
+          {isDisabled && disableReason ? (
+            <span className="text-red-500">{disableReason}</span>
+          ) : isDisabled ? (
+            <span className="text-red-500">Disabled</span>
+          ) : (
+            <span className="text-green-500">Available</span>
+          )}
           <span>{piscine.questCount + piscine.exerciseCount} total items</span>
         </CardFooter>
       </Card>

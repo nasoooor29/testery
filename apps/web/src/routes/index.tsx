@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { piscines } from "@/data/data";
+import { piscines, testerProcedures } from "@/data/data";
 import { Hero } from "@/components/hero";
 import { PiscineCard } from "@/components/piscine-card";
 import { collectSummary } from "@/utils/piscine";
@@ -20,9 +20,29 @@ function HomeComponent() {
         <Hero availablePiscines={availablePiscines} />
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {availablePiscines.map((piscine) => (
-            <PiscineCard key={piscine.name} piscine={piscine} />
-          ))}
+          {availablePiscines.map((piscine) => {
+            const haveTester = Object.keys(testerProcedures).includes(
+              piscine.name,
+            );
+            const zeroed =
+              piscine.questCount === 0 && piscine.exerciseCount === 0;
+            const depthMoreThan2 = piscine.deepestQuestDepth >= 2;
+            let reason = "";
+            if (!haveTester) {
+              reason = "NO";
+            } else if (zeroed) {
+              reason = "This piscine has no quests or exercises.";
+            }
+            const isDisabled = !haveTester || zeroed || depthMoreThan2;
+            return (
+              <PiscineCard
+                key={piscine.name}
+                piscine={piscine}
+                isDisabled={isDisabled}
+                disableReason={reason}
+              />
+            );
+          })}
         </section>
       </div>
     </div>
