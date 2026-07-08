@@ -10,7 +10,7 @@ this will work on all the piscines on reboot, just open the tester, go to the co
 if you did it right my tester will show you a green badge on the piscine page
 ![did it righ](./attachments/correct.png)
 if you didn't it will display the error message below
-![incorrect](./attachments/not correct.png)
+![incorrect](./attachments/not_correct.png)
 
 ## NOTES:
 
@@ -29,8 +29,8 @@ cargo init <exercise_name>
 
 ## the tester have been tested on the following piscines:
 
-- [ ] BH Piscine
-- [ ] Main checkpoint
+- [x] BH Piscine
+- [x] Main checkpoint
 - [x] JS Piscine
 - [x] Rust Piscine
 - [x] Scripting Piscine
