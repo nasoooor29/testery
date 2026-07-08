@@ -5,6 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 REPO_DIR="$ROOT_DIR/apps/web/public/01edu"
 
+echo 'Downloading/Updating the 01edu repository (this may take sometime)...'
+echo 'we need this repository so we can get the quests and exercises'
 if [ -d "$REPO_DIR/.git" ]; then
     bash "$SCRIPT_DIR/update_repo.sh" pull
 else
@@ -26,4 +28,9 @@ if ! command -v pnpm >/dev/null 2>&1; then
     exit 1
 fi
 
-exec pnpm --dir "$ROOT_DIR" run dev
+cd "$ROOT_DIR" || exit 1
+echo 'Installing dependencies...'
+pnpm install
+
+echo 'Starting the the app...'
+pnpm run dev

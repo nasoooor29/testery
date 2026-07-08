@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { publicProcedure } from "..";
-import { env } from "@testery/env/server";
 import { dockerRun } from "../utils/docker";
 import fs from "fs";
 import { ORPCError } from "@orpc/client";
-import { getConfig } from "./config";
+import { getConfig, type PiscineName } from "./config";
 
 async function dockerRunWrapper(args: string[], signal?: AbortSignal) {
   const res = await dockerRun(args, signal);
@@ -16,12 +15,21 @@ async function dockerRunWrapper(args: string[], signal?: AbortSignal) {
   }
   return res;
 }
+function mustGetConfig(piscineName: PiscineName) {
+  const config = getConfig();
+  if (!config[piscineName]) {
+    throw new ORPCError("BAD_REQUEST", {
+      message: `Config for ${piscineName} not found`,
+    });
+  }
+  return config[piscineName];
+}
 export const testerRouter = {
   rust: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const repoPath = getConfig();
-      ensureDir(repoPath["Rust Piscine"].repo);
+      const conf = mustGetConfig("Rust Piscine");
+      ensureDir(conf.repo);
 
       const args = [
         "run",
@@ -31,7 +39,7 @@ export const testerRouter = {
         `-e`,
         `RUST_BACKTRACE=1`,
         "-v",
-        `${repoPath["Rust Piscine"].repo}:/root/student`,
+        `${conf.repo}:/root/student`,
         "--entrypoint",
         "bash",
         "ghcr.io/01-edu/test-rust",
@@ -45,8 +53,8 @@ export const testerRouter = {
   js: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const conf = getConfig();
-      ensureDir(conf["JS Piscine"].repo);
+      const conf = mustGetConfig("JS Piscine");
+      ensureDir(conf.repo);
 
       const args = [
         "run",
@@ -54,7 +62,7 @@ export const testerRouter = {
         "-e",
         `EXERCISE=${input.name}`,
         "-v",
-        `${conf["JS Piscine"].repo}:/jail/student`,
+        `${conf.repo}:/jail/student`,
         "ghcr.io/01-edu/test-js:latest",
       ];
 
@@ -64,8 +72,8 @@ export const testerRouter = {
   bh: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const conf = getConfig();
-      ensureDir(conf["BH Piscine"].repo);
+      const conf = mustGetConfig("BH Piscine");
+      ensureDir(conf.repo);
 
       const args = [
         "run",
@@ -75,7 +83,7 @@ export const testerRouter = {
         "-e",
         `EXERCISE=${input.name}`,
         "-v",
-        `${conf["BH Piscine"].repo}:/root/student`,
+        `${conf.repo}:/root/student`,
         "ghcr.io/01-edu/test-go:latest",
       ];
 
@@ -85,8 +93,8 @@ export const testerRouter = {
   script: publicProcedure
     .input(z.object({ name: z.string() }))
     .handler(async function ({ input, signal }) {
-      const repoPath = `${env.REPOS_DIR}/piscine-scripting`;
-      ensureDir(repoPath);
+      const conf = mustGetConfig("Scripting Piscine");
+      ensureDir(conf.repo);
 
       const args = [
         "run",
@@ -96,7 +104,7 @@ export const testerRouter = {
         "-e",
         `EXERCISE=${input.name}`,
         "-v",
-        `${repoPath}:/tmp/student`,
+        `${conf.repo}:/tmp/student`,
         "ghcr.io/01-edu/module-sh:latest",
       ];
 

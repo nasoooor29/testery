@@ -19,6 +19,7 @@ const piscines = [
   "AI Piscine",
   "AI Forge Piscine",
 ] as const;
+export type PiscineName = (typeof piscines)[number];
 const configValueSchema = z.object({ repo: z.string() });
 const configSchema = z.record(z.literal(piscines), configValueSchema);
 // current_file/../../../../config.json
