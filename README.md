@@ -8,9 +8,11 @@ READ THIS SHIT BEFORE CONTACTING ME (PLEASE I BEG YOU)
 this will work on all the piscines on reboot, just open the tester, go to the config page, and set the repos directory to the absolute path of the directory that contains your piscine repos. and please put the ABOLUTE PATH, please read this shit before contacting me.
 
 if you did it right my tester will show you a green badge on the piscine page
+
 ![did it righ](./attachments/correct.png)
 
 if you didn't it will display the error message below
+
 ![incorrect](./attachments/not_correct.png)
 
 ## NOTES:
