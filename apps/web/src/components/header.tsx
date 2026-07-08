@@ -14,7 +14,11 @@ export default function Header() {
             </Link>
           </div>
         </div>
-        <nav className="flex gap-4 text-sm"></nav>
+        <nav className="flex gap-4 text-sm">
+          <Link to="/config" className="text-muted-foreground hover:text-foreground">
+            Config
+          </Link>
+        </nav>
       </div>
     </div>
   );

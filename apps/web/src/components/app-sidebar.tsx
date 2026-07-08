@@ -1,4 +1,4 @@
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, Settings } from "lucide-react";
 
 import { piscines } from "@/data/data";
 
@@ -69,6 +69,7 @@ export default function AppSidebar() {
   return (
     <Sidebar>
       {route.pathname === "/" && <HomePageSidebar />}
+      {route.pathname === "/config" && <ConfigSidebar />}
       {piscine &&
         name &&
         summary &&
@@ -116,9 +117,46 @@ export default function AppSidebar() {
   );
 }
 
+function ConfigSidebar() {
+  return (
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Settings</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <Link to="/config">
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Config">
+                  <Settings className="size-4" />
+                  <span>Config</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </Link>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+  );
+}
+
 function HomePageSidebar() {
   return (
     <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <Link to="/config">
+              <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Config">
+                  <Settings className="size-4" />
+                  <span>Config</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </Link>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
       <SidebarGroup>
         <SidebarGroupLabel>Available Piscines</SidebarGroupLabel>
         <SidebarGroupContent>
