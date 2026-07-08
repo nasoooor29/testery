@@ -33,6 +33,10 @@ export function getConfig() {
     if (!parsedConfig.success) {
       throw new Error("Invalid config.json file");
     }
+    const anyMissing = piscines.some((piscine) => !parsedConfig.data[piscine]);
+    if (!anyMissing) {
+      return parsedConfig.data;
+    }
     for (const piscine of piscines) {
       if (!parsedConfig.data[piscine]) {
         parsedConfig.data[piscine] = { repo: "" };

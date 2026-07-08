@@ -4,6 +4,8 @@ import { piscines, testerProcedures } from "@/data/data";
 import { Hero } from "@/components/hero";
 import { PiscineCard } from "@/components/piscine-card";
 import { collectSummary } from "@/utils/piscine";
+import { useQuery } from "@tanstack/react-query";
+import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -12,6 +14,11 @@ export const Route = createFileRoute("/")({
 function HomeComponent() {
   const availablePiscines = Object.entries(piscines).map(([name, node]) =>
     collectSummary(name, node),
+  );
+  const conf = useQuery(
+    orpc.conf.getConfig.queryOptions({
+      refetchInterval: 1000,
+    }),
   );
 
   return (
@@ -28,12 +35,22 @@ function HomeComponent() {
               piscine.questCount === 0 && piscine.exerciseCount === 0;
             const depthMoreThan2 = piscine.deepestQuestDepth >= 2;
             let reason = "";
+            let repoSet = false;
             if (!haveTester) {
-              reason = "NO";
+              reason = "TESTER NOT AVALIABLE";
             } else if (zeroed) {
               reason = "This piscine has no quests or exercises.";
+            } else if (conf.data) {
+              const repo = conf.data[piscine.name]?.repo;
+              if (repo.trim() === "") {
+                reason = "This piscine has no repository configured.";
+                repoSet = false;
+              } else {
+                repoSet = true;
+              }
             }
-            const isDisabled = !haveTester || zeroed || depthMoreThan2;
+            const isDisabled =
+              !haveTester || zeroed || depthMoreThan2 || !repoSet;
             return (
               <PiscineCard
                 key={piscine.name}
