@@ -1,5 +1,6 @@
 import { Node } from "@/schemas/bh";
 import bh from "./bh.json";
+import { orpc } from "@/utils/orpc";
 
 export const piscines = {
   "BH Piscine": bh.children["bh-piscine"],
@@ -36,6 +37,16 @@ export const avaliableTesters = {
   "ghcr.io/01-edu/ai-starter-dom": ["AI Piscine"],
   "ghcr.io/01-edu/ai-starter-js": ["AI Piscine"],
 };
+
+export const testerProcedures = {
+  "Rust Piscine": orpc.tester.rust,
+  "JS Piscine": orpc.tester.js,
+  "Scripting Piscine": orpc.tester.script,
+  "BH Piscine": orpc.tester.bh,
+  "Main checkpoint": orpc.tester.bh,
+} as const;
+
+export type TestedPiscine = keyof typeof testerProcedures;
 
 export const exerciesMap: Map<number, Node> = new Map();
 function collectExercises(node: Node): Node[] {

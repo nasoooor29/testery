@@ -5,27 +5,16 @@ import { Badge } from "@testery/ui/components/badge";
 import { Separator } from "@testery/ui/components/separator";
 import { Clock, Copy, Loader2, Play, RefreshCw, Terminal } from "lucide-react";
 import { useState } from "react";
-import { orpc } from "@/utils/orpc";
 import { Node } from "@/schemas/bh";
 import { toast } from "sonner";
 import { ORPCError } from "@orpc/client";
 import { DockerRunResponse } from "@testery/api/utils/docker";
+import { TestedPiscine, testerProcedures } from "@/data/data";
 
 interface Props {
   exercies: Node;
   piscineName: string;
 }
-
-const testerProcedures = {
-  "Rust Piscine": orpc.tester.rust,
-  "JS Piscine": orpc.tester.js,
-  "Scripting Piscine": orpc.tester.script,
-  "BH Piscine": orpc.tester.bh,
-  "Main checkpoint": orpc.tester.bh,
-} as const;
-
-type TestedPiscine = keyof typeof testerProcedures;
-
 function getTestedPiscine(piscineName: string): TestedPiscine | null {
   return piscineName in testerProcedures
     ? (piscineName as TestedPiscine)
