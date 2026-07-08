@@ -31,7 +31,11 @@ import {
 const piscineNames = Object.keys(piscines);
 
 export default function AppSidebar() {
-  const health = useQuery(orpc.healthCheck.queryOptions());
+  const health = useQuery(
+    orpc.healthCheck.queryOptions({
+      refetchInterval: 1000,
+    }),
+  );
   const route = useLocation();
   let name: string | undefined;
   if (route.pathname.startsWith("/piscines/")) {

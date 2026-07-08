@@ -2,12 +2,13 @@ import type { RouterClient } from "@orpc/server";
 
 import { publicProcedure } from "../index";
 import { testerRouter } from "./tester";
-import { configRouter } from "./config";
+import { configRouter, getConfig } from "./config";
 
 export const appRouter = {
   tester: testerRouter,
   conf: configRouter,
   healthCheck: publicProcedure.handler(() => {
+    getConfig();
     return "OK";
   }),
 };

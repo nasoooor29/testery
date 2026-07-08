@@ -21,10 +21,10 @@ const piscines = [
 const configValueSchema = z.object({ repo: z.string() });
 const configSchema = z.record(z.string(), configValueSchema);
 // current_file/../../../../config.json
-const CONFIG_LOCATION = "../../../config.json";
+const CONFIG_LOCATION = "../../config.json";
 
 // this config will be a json file on the project root, and will contain the piscines repos locations
-function getConfig() {
+export function getConfig() {
   // if the config.json file already exists, load it and if any field missing set it
   if (fs.existsSync(CONFIG_LOCATION)) {
     const configFile = fs.readFileSync(CONFIG_LOCATION, "utf-8");
@@ -61,7 +61,8 @@ function getConfig() {
   fs.writeFileSync(CONFIG_LOCATION, JSON.stringify(conf, null, 2));
   return conf;
 }
-function setConfig(config: z.infer<typeof configSchema>) {
+
+export function setConfig(config: z.infer<typeof configSchema>) {
   fs.writeFileSync(CONFIG_LOCATION, JSON.stringify(config, null, 2));
   return config;
 }
