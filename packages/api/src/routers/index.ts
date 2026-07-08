@@ -8,8 +8,12 @@ export const appRouter = {
   tester: testerRouter,
   conf: configRouter,
   healthCheck: publicProcedure.handler(() => {
-    getConfig();
-    return "OK";
+    try {
+      getConfig();
+      return "OK";
+    } catch (error) {
+      return "invalid config: " + error?.message;
+    }
   }),
 };
 export type AppRouter = typeof appRouter;

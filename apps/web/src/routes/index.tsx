@@ -41,11 +41,17 @@ function HomeComponent() {
             } else if (zeroed) {
               reason = "This piscine has no quests or exercises.";
             } else if (conf.data) {
-              const repo = conf.data[piscine.name]?.repo;
-              if (repo.trim() === "") {
-                reason = "This piscine has no repository configured.";
-                repoSet = false;
-              } else {
+              const data = conf.data[piscine.name];
+              if (data.repo.trim() === "") {
+                reason = "Repository not set for this piscine.";
+              }
+              if (data.notValidReason) {
+                reason = data.notValidReason;
+              }
+              if (
+                data.repo.trim() !== "" &&
+                data.notValidReason === undefined
+              ) {
                 repoSet = true;
               }
             }

@@ -1,6 +1,7 @@
 import fs from "fs";
 import z from "zod";
 import { publicProcedure } from "..";
+import { ORPCError } from "@orpc/server";
 // NOTE: pull it from data.ts and make it a package so both frontend and backend can use it
 
 const piscines = [
@@ -23,6 +24,24 @@ const configSchema = z.record(z.literal(piscines), configValueSchema);
 // current_file/../../../../config.json
 const CONFIG_LOCATION = "../../config.json";
 
+// this will return the same config but with additional field which is notValidReason
+// if dir does not exist, it will be set to "dir does not exist"
+function returnWithValid(c: z.infer<typeof configSchema>) {
+  const result: Record<string, { repo: string; notValidReason?: string }> = {};
+  for (const piscine of piscines) {
+    const repoPath = c[piscine].repo;
+    if (!fs.existsSync(repoPath)) {
+      result[piscine] = {
+        repo: repoPath,
+        notValidReason: "dir does not exist",
+      };
+    } else {
+      result[piscine] = { repo: repoPath };
+    }
+  }
+  return result;
+}
+
 // this config will be a json file on the project root, and will contain the piscines repos locations
 export function getConfig() {
   // if the config.json file already exists, load it and if any field missing set it
@@ -35,26 +54,24 @@ export function getConfig() {
     }
     const anyMissing = piscines.some((piscine) => !parsedConfig.data[piscine]);
     if (!anyMissing) {
-      return parsedConfig.data;
+      return returnWithValid(parsedConfig.data);
     }
     for (const piscine of piscines) {
       if (!parsedConfig.data[piscine]) {
         parsedConfig.data[piscine] = { repo: "" };
       }
     }
-    fs.writeFileSync(
-      CONFIG_LOCATION,
-      JSON.stringify(parsedConfig.data, null, 2),
-    );
-    return parsedConfig.data;
+    if (anyMissing) {
+      fs.writeFileSync(
+        CONFIG_LOCATION,
+        JSON.stringify(parsedConfig.data, null, 2),
+      );
+    }
+    return returnWithValid(parsedConfig.data);
   }
 
   // if the config.json file does not exist, create it with all the piscines and empty repo fields
-  const conf: {
-    [key: string]: {
-      repo: string;
-    };
-  } = {};
+  const conf: z.infer<typeof configSchema> = {} as z.infer<typeof configSchema>;
   for (const piscine of piscines) {
     conf[piscine] = {
       repo: "",
@@ -63,7 +80,7 @@ export function getConfig() {
 
   // save it to a json file on the project root
   fs.writeFileSync(CONFIG_LOCATION, JSON.stringify(conf, null, 2));
-  return conf;
+  return returnWithValid(conf);
 }
 
 export function setConfig(config: z.infer<typeof configSchema>) {
@@ -73,11 +90,28 @@ export function setConfig(config: z.infer<typeof configSchema>) {
 
 export const configRouter = {
   getConfig: publicProcedure.handler(async () => {
-    const config = getConfig();
-    return config;
+    try {
+      const config = getConfig();
+      return config;
+    } catch (error) {
+      console.error("Error getting config:", error);
+      throw new ORPCError("BAD_REQUEST", {
+        message: error.message,
+      });
+    }
   }),
   setConfig: publicProcedure.input(configSchema).handler(async ({ input }) => {
-    const config = setConfig(input);
-    return config;
+    try {
+      getConfig();
+      const config = setConfig(input);
+      getConfig(); // validate the config after setting it
+
+      return config;
+    } catch (error) {
+      console.error("Error getting config:", error);
+      throw new ORPCError("BAD_REQUEST", {
+        message: error.message,
+      });
+    }
   }),
 };

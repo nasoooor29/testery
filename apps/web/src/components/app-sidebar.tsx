@@ -27,6 +27,7 @@ import {
   getSortedChildren,
   PiscineSummary,
 } from "@/utils/piscine";
+import { Button } from "@testery/ui/components/button";
 
 const piscineNames = Object.keys(piscines);
 
@@ -85,17 +86,28 @@ export default function AppSidebar() {
         )}
 
       <SidebarFooter>
-        <div className="flex items-center justify-between border px-3 py-2 text-xs">
+        <div className="border px-3 py-2 text-xs">
           {health.isLoading ? (
             <span className="text-muted-foreground">
               Checking connection...
             </span>
           ) : health.isError ? (
             <span className="text-red-500">Disconnected</span>
+          ) : health.data !== "OK" ? (
+            <div className="flex w-full flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <BadgeCheck className="size-4 text-red-500" />
+                <span>{health.data || "good enough"}</span>
+              </div>
+
+              <Button className="w-full" size="sm">
+                FIX
+              </Button>
+            </div>
           ) : (
             <div className="flex items-center gap-2">
               <BadgeCheck className="size-4 text-emerald-500" />
-              <span>Connected</span>
+              <span>{health.data || "good enough"}</span>
             </div>
           )}
         </div>
