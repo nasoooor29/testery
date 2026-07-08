@@ -17,9 +17,9 @@ const piscines = [
   "Prompting Piscine",
   "AI Piscine",
   "AI Forge Piscine",
-];
+] as const;
 const configValueSchema = z.object({ repo: z.string() });
-const configSchema = z.record(z.string(), configValueSchema);
+const configSchema = z.record(z.literal(piscines), configValueSchema);
 // current_file/../../../../config.json
 const CONFIG_LOCATION = "../../config.json";
 
